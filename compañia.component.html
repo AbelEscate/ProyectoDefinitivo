@@ -1,0 +1,537 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">       
+          <ngb-tabset>
+            <ngb-tab title="Compañia">
+                <ng-template ngbTabContent>
+                    <div class="row">
+                        <div class="col-12 m-t-30">                       
+                            <div class="card">
+                                <div class="card-header">
+                                   Información de la Compañia
+                                </div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                    <th >Compañia ID</th>
+                                    <th>Descripcion</th>
+                                    <th>Numero RUC</th>
+                                    <th>Descripcion Comercial</th>
+                                    <th>Direccion</th>
+                                    <th>Representante</th>
+                                    <th>DNI Representante</th>
+                                    <th>Cargo Representante</th>
+                                    <th>Telefono </th>
+                                    <th>Email</th>
+                                    <th>Created Date</th>
+                                  </tr>
+                                    </thead>
+                                       
+   
+                                  <tbody>
+                                      <tr *ngFor="let file of compania">
+                                       
+                                            <td>{{file.companiaId}}</td>
+                                            <td>{{file.descripcion}}</td>
+                                            <td>{{file.numeroRuc}}</td>
+                                            <td>{{file.descripcionComercial}}</td>
+                                            <td>{{file.direccion}}</td>
+                                            <td>{{file.representante}}</td>   
+                                            <td>{{file.dniRepresentante}}</td>
+                                            <td>{{file.cargoRepresentante}}</td>
+                                            <td>{{file.telefonoUno}}</td>
+                                            <td>{{file.email}}</td>
+                                            <td>{{file.createdDate | date:'dd/MM/yyyy'}}</td>
+                                            
+                                            <button type="button" class="btn btn-info btn-rounded" (click)="open(contentEdit,file.companiaId)">
+                                                <i class="fa fa-edit"></i> Edit</button>
+                                            
+                                      </tr>
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </ng-template>
+                <ng-template #contentEdit let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Mantenimiento Compañia</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                                <div class="col-12 m-t-30">                       
+                                            <div class="card">                                                                
+                                                <div class="conteiner">
+                                                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                                                        <div>
+                                                            <div class="form-group row" >
+                                                                
+                                                              <label for="example-text-input" class="col-4 col-form-label">Compañia ID</label>
+                                                              <div class="col-8">
+                                                                  <input class="form-control" formControlName="companiaId" [(ngModel)]="archiTempUpd.companiaId" name="archiTempUpd.companiaId" disabled type="number"  id="txtcompaniaId">
+                                                              </div>
+                                                              
+                                                               <label for="example-text-input" class="col-4 col-form-label">Descripcion</label>
+                                                               <div class="col-8">
+                                                                   <input class="form-control" formControlName="descripcion" [(ngModel)]="archiTempUpd.descripcion" name="archiTempUpd.descripcion" type="text"  id="txtdescripcion"
+                                                                   [ngClass]="{'is-invalid':submitted && f.descripcion.errors}">
+                                                                   <div *ngIf="submitted && f.descripcion.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.descripcion.errors.required">Descripcion es un dato requerido</div>
+                                                                  </div>
+                                                               </div>
+                                                                
+                                                                <label for="example-text-input" class="col-4 col-form-label">Numero Ruc</label>
+                                                                <div class="col-8">
+                                                                    <input class="form-control" formControlName="numeroRuc" [(ngModel)]="archiTempUpd.numeroRuc" name="archiTempUpd.numeroRuc" type="number" id="txtnumeroRuc"
+                                                                    [ngClass]="{'is-invalid':submitted && f.numeroRuc.errors}">
+                                                                    <div *ngIf="submitted && f.numeroRuc.errors" class="invalid-feedback">
+                                                                      <div *ngIf="f.numeroRuc.errors.required">Numero Ruc es un dato requerido</div>
+                                                                    </div>
+                                                                </div>
+                                                                <label for="example-text-input" class="col-4 col-form-label">Descripcion Comercial</label>
+                                                                <div class="col-8">
+                                                                  <input class="form-control" formControlName="descripcionComercial" [(ngModel)]="archiTempUpd.descripcionComercial" name="archiTempUpd.descripcionComercial" type="text"  id="txtdescripcionComercial8"
+                                                                  [ngClass]="{'is-invalid':submitted && f.descripcionComercial.errors}">
+                                                                  <div *ngIf="submitted && f.descripcionComercial.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.descripcionComercial.errors.required">Descripcion Comercial es un dato requerido</div>
+                                                                  </div>
+                                                              </div>
+                                                              <label for="example-text-input" class="col-4 col-form-label">Direccion</label>
+                                                                <div class="col-8">
+                                                                  <input class="form-control" formControlName="direccion" [(ngModel)]="archiTempUpd.direccion" name="archiTempUpd.direccion" type="text"  id="txtdireccion"
+                                                                  [ngClass]="{'is-invalid':submitted && f.direccion.errors}">
+                                                                  <div *ngIf="submitted && f.direccion.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.direccion.errors.required">Direccion es un dato requerido</div>
+                                                                  </div>
+                                                              </div>
+                                                              
+                                                             
+                                                              <label for="example-text-input" class="col-4 col-form-label">Representante</label>
+                                                                <div class="col-8">
+                                                                  <input class="form-control" formControlName="representante" [(ngModel)]="archiTempUpd.representante" name="archiTempUpd.representante" type="text"  id="txtrepresentante"
+                                                                  [ngClass]="{'is-invalid':submitted && f.representante.errors}">
+                                                                  <div *ngIf="submitted && f.representante.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.representante.errors.required">Representante es un dato requerido</div>
+                                                                  </div>
+                                                              </div>
+                                                              <label for="example-text-input" class="col-4 col-form-label">DNI Representante</label>
+                                                                <div class="col-8">
+                                                                  <input class="form-control" formControlName="dniRepresentante" [(ngModel)]="archiTempUpd.dniRepresentante" name="archiTempUpd.dniRepresentante" type="number"  id="txtdniRepresentante"
+                                                                  [ngClass]="{'is-invalid':submitted && f.dniRepresentante.errors}">
+                                                                  <div *ngIf="submitted && f.dniRepresentante.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.dniRepresentante.errors. required">DNI Representante es un dato requerido</div>
+                                                                  </div>
+                                                              </div>               
+                                                              
+                                                              <label for="example-text-input" class="col-4 col-form-label">Cargo Representante</label>
+                                                                <div class="col-8">
+                                                                  <input class="form-control" formControlName="cargoRepresentante" [(ngModel)]="archiTempUpd.cargoRepresentante" name="archiTempUpd.cargoRepresentante" type="text"  id="txtcargoRepresentante"
+                                                                  [ngClass]="{'is-invalid':submitted && f.cargoRepresentante.errors}">
+                                                                  <div *ngIf="submitted && f.cargoRepresentante.errors" class="invalid-feedback">
+                                                                    <div *ngIf="f.cargoRepresentante.errors. required">Cargo Representante es un dato requerido</div>
+                                                                  </div>
+                                                              </div>   
+
+
+
+
+                                                              <label for="example-text-input" class="col-4 col-form-label">Telefono 1</label>
+                                                              <div class="col-8">
+                                                                <input class="form-control" formControlName="telefonoUno" [(ngModel)]="archiTempUpd.telefonoUno" name="archiTempUpd.telefonoUno" type="number"  id="txttelefonoUno"
+                                                                [ngClass]="{'is-invalid':submitted && f.telefonoUno.errors}">
+                                                                <div *ngIf="submitted && f.telefonoUno.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.telefonoUno.errors. required">Telefono 1 es un dato requerido</div>
+                                                                </div>
+                                                            </div>   
+
+
+                                                            <label for="example-text-input" class="col-4 col-form-label">Telefono 2</label>
+                                                              <div class="col-8">
+                                                                <input class="form-control" formControlName="telefonoDos" [(ngModel)]="archiTempUpd.telefonoDos" name="archiTempUpd.telefonoDos" type="number"  id="txttelefonoDos"
+                                                                [ngClass]="{'is-invalid':submitted && f.telefonoDos.errors}">
+                                                                <div *ngIf="submitted && f.telefonoDos.errors" class="invalid-feedback">
+                                                                  <div *ngIf="f.telefonoDos.errors. required">Telefono 2 es un dato requerido</div>
+                                                                </div>
+                                                            </div>      
+
+
+                                                            <label for="example-text-input" class="col-4 col-form-label">Telefono 3</label>
+                                                            <div class="col-8">
+                                                              <input class="form-control" formControlName="telefonoTres" [(ngModel)]="archiTempUpd.telefonoTres" name="archiTempUpd.telefonoTres" type="number"  id="txttelefonoTres"
+                                                              [ngClass]="{'is-invalid':submitted && f.telefonoTres.errors}">
+                                                              <div *ngIf="submitted && f.telefonoTres.errors" class="invalid-feedback">
+                                                                <div *ngIf="f.telefonoTres.errors. required">Telefono 3 es un dato requerido</div>
+                                                              </div>
+                                                          </div>     
+
+
+
+                                                          <label for="example-text-input" class="col-4 col-form-label">Email</label>
+                                                          <div class="col-8">
+                                                            <input class="form-control" formControlName="email" [(ngModel)]="archiTempUpd.email" name="archiTempUpd.email" type="text"  id="txtemail"
+                                                            [ngClass]="{'is-invalid':submitted && f.email.errors}">
+                                                            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                              <div *ngIf="f.email.errors. required">Email es un dato requerido</div>
+                                                            </div>
+                                                        </div>     
+
+                                                        <label for="example-text-input" class="col-4 col-form-label">Web Site</label>
+                                                        <div class="col-8">
+                                                          <input class="form-control" formControlName="webSite" [(ngModel)]="archiTempUpd.webSite" name="archiTempUpd.webSite" type="text"  id="txtwebSite"
+                                                          [ngClass]="{'is-invalid':submitted && f.webSite.errors}">
+                                                          <div *ngIf="submitted && f.webSite.errors" class="invalid-feedback">
+                                                            <div *ngIf="f.webSite.errors. required">Web Site es un dato requerido</div>
+                                                          </div>
+                                                      </div>     
+
+
+
+                                                      <label for="example-text-input" class="col-4 col-form-label">Logo</label>
+                                                      <div class="col-8">
+                                                        <input class="form-control" formControlName="logo" [(ngModel)]="archiTempUpd.logo" name="archiTempUpd.logo" type="text"  id="txtlogo"
+                                                        [ngClass]="{'is-invalid':submitted && f.logo.errors}">
+                                                        <div *ngIf="submitted && f.logo.errors" class="invalid-feedback">
+                                                          <div *ngIf="f.logo.errors. required">Logo es un dato requerido</div>
+                                                        </div>
+                                                    </div>     
+
+
+                                                    <label for="example-text-input" class="col-4 col-form-label">Activo PDT</label>
+                                                      <div class="col-8">
+                                                        <input class="form-control" formControlName="activoPDT" [(ngModel)]="archiTempUpd.activoPDT" name="archiTempUpd.activoPDT" type="text"  id="txtlogo"
+                                                        [ngClass]="{'is-invalid':submitted && f.activoPDT.errors}">
+                                                        <div *ngIf="submitted && f.activoPDT.errors" class="invalid-feedback">
+                                                          <div *ngIf="f.activoPDT.errors. required">Activo PDT es un dato requerido</div>
+                                                        </div>
+                                                    </div>     
+
+
+                                                    <label for="example-text-input" class="col-4 col-form-label">Codigo Pais</label>
+                                                    <div class="col-8">
+                                                      <input class="form-control" formControlName="codPais" [(ngModel)]="archiTempUpd.codPais" name="archiTempUpd.codPais" type="number"  id="txtcodPais"
+                                                      [ngClass]="{'is-invalid':submitted && f.codPais.errors}">
+                                                      <div *ngIf="submitted && f.codPais.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.codPais.errors. required">Codigo Pais es un dato requerido</div>
+                                                      </div>
+                                                  </div>     
+
+
+                                                  
+                                                  <label for="example-text-input" class="col-4 col-form-label">Longitud</label>
+                                                  <div class="col-8">
+                                                    <input class="form-control" formControlName="logitud" [(ngModel)]="archiTempUpd.logitud" name="archiTempUpd.logitud" type="text"  id="txtlogitud"
+                                                    [ngClass]="{'is-invalid':submitted && f.logitud.errors}">
+                                                    <div *ngIf="submitted && f.logitud.errors" class="invalid-feedback">
+                                                      <div *ngIf="f.logitud.errors. required">Longitud es un dato requerido</div>
+                                                    </div>
+                                                </div>     
+
+
+                                                <label for="example-text-input" class="col-4 col-form-label">Latitud</label>
+                                                <div class="col-8">
+                                                  <input class="form-control" formControlName="latitud" [(ngModel)]="archiTempUpd.latitud" name="archiTempUpd.latitud" type="text"  id="txtlatitud"
+                                                  [ngClass]="{'is-invalid':submitted && f.latitud.errors}">
+                                                  <div *ngIf="submitted && f.latitud.errors" class="invalid-feedback">
+                                                    <div *ngIf="f.latitud.errors. required">Latitud es un dato requerido</div>
+                                                  </div>
+                                              </div>     
+
+
+                                              <label for="example-text-input" class="col-4 col-form-label">Created Date</label>
+                                              <div class="col-8">
+                                                <input class="form-control" formControlName="createdDate" [(ngModel)]="archiTempUpd.createdDate" name="archiTempUpd.createdDate" type="text"  id="txtcreatedDate"
+                                                [ngClass]="{'is-invalid':submitted && f.createdDate.errors}">
+                                                <div *ngIf="submitted && f.createdDate.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.createdDate.errors. required">Created Date es un dato requerido</div>
+                                                </div>
+                                            </div>  
+
+
+                                            <label for="example-text-input" class="col-4 col-form-label">Created By</label>
+                                              <div class="col-8">
+                                                <input class="form-control" formControlName="createdBy" [(ngModel)]="archiTempUpd.createdBy" name="archiTempUpd.createdBy" type="text"  id="txtcreatedBy"
+                                                [ngClass]="{'is-invalid':submitted && f.createdBy.errors}">
+                                                <div *ngIf="submitted && f.createdBy.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.createdBy.errors. required">Created By es un dato requerido</div>
+                                                </div>
+                                            </div>  
+
+
+
+                                            <label for="example-text-input" class="col-4 col-form-label">Ultima fecha de Modificacion</label>
+                                              <div class="col-8">
+                                                <input class="form-control" formControlName="lastodifiedDate" [(ngModel)]="archiTempUpd.lastodifiedDate" name="archiTempUpd.lastodifiedDate" type="text"  id="txtlastodifiedDate"
+                                                [ngClass]="{'is-invalid':submitted && f.lastodifiedDate.errors}">
+                                                <div *ngIf="submitted && f.lastodifiedDate.errors" class="invalid-feedback">
+                                                  <div *ngIf="f.lastodifiedDate.errors. required">Ultima fecha de Modificacion Date es un dato requerido</div>
+                                                </div>
+                                            </div>  
+
+
+                                            <label for="example-text-input" class="col-4 col-form-label">Modificado por</label>
+                                            <div class="col-8">
+                                              <input class="form-control" formControlName="lastmodfiedBy" [(ngModel)]="archiTempUpd.lastmodfiedBy" name="archiTempUpd.lastmodfiedBy" type="text"  id="txtlastmodfiedBy"
+                                              [ngClass]="{'is-invalid':submitted && f.lastmodfiedBy.errors}">
+                                              <div *ngIf="submitted && f.lastmodfiedBy.errors" class="invalid-feedback">
+                                                <div *ngIf="f.lastmodfiedBy.errors. required">Modificado por es un dato requerido</div>
+                                              </div>
+                                          </div>  
+
+                                          
+                                          <label for="example-text-input" class="col-4 col-form-label">Flag Estado</label>
+                                          <div class="col-8">
+                                            <input class="form-control" formControlName="flagestado" [(ngModel)]="archiTempUpd.flagestado" name="archiTempUpd.flagestado" type="number"  id="txtflagestado"
+                                            [ngClass]="{'is-invalid':submitted && f.flagestado.errors}">
+                                            <div *ngIf="submitted && f.flagestado.errors" class="invalid-feedback">
+                                              <div *ngIf="f.flagestado.errors. required">Flag Estado es un dato requerido</div>
+                                            </div>
+                                        </div>  
+
+
+                                                              <div class="col-12" *ngIf="response">
+                                                                <label class="alert alert-warning col-12 col-form-label " >{{Respuesta}}</label>
+                                                              </div> 
+                                                            </div>                                          
+                                                           
+                                                        </div>                                     
+                                                    </form>
+                                                </div>
+                                            </div>
+  
+                                </div>
+                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-inverse" (click)="guardar()">Guardar</button>
+                    </div>
+           </ng-template>
+
+            </ngb-tab>
+            <ngb-tab>
+              <ng-template ngbTabTitle>
+                <b>Insertar Datos</b>
+              </ng-template>
+              <ng-template ngbTabContent>
+                  <div class="row">
+                      <div class="col-12 m-t-30">                       
+                          <div class="card">
+                              <div class="card-header">
+                                  Informacion General
+                              </div>
+                              <form [formGroup]="insertForm" (ngSubmit)="onSubmit()">
+                                <div >
+
+                                    <div class="form-group row" >
+                                      <label for="example-text-input" class="col-4 col-form-label">Compañia ID</label>
+                                      <div class="col-8">
+                                          <input class="form-control"  formControlName="companiaId" [(ngModel)]="archiTemp.companiaId" name="archiTemp.companiaId" type="number"  id="txtcompaniaId3"
+                                          [ngClass]="{'is-invalid':submittes && i.companiaId.errors}">
+                                          <div *ngIf="submittes && i.companiaId.errors" class="invalid-feedback">
+                                              <div *ngIf="i.companiaId.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                       <label for="example-text-input" class="col-4 col-form-label">Descripcion</label>
+                                       <div class="col-8">
+                                           <input class="form-control" formControlName="descripcion" [(ngModel)]="archiTemp.descripcion" name="archiTemp.descripcion" type="text"  id="txtdescripcion3"
+                                           [ngClass]="{'is-invalid':submittes &&  i.descripcion.errors}">
+                                           <div *ngIf="submittes && i.descripcion.errors" class="invalid-feedback">
+                                              <div *ngIf="i.descripcion.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      
+                                          </div>
+                                        <label for="example-text-input" class="col-4 col-form-label">Numero RUC</label>
+                                        <div class="col-8">
+                                           <input class="form-control" formControlName="numeroRuc" [(ngModel)]="archiTemp.numeroRuc" name="archiTemp.numeroRuc" type="number"  id="txtnumeroRuc3"
+                                           [ngClass]="{'is-invalid':submittes && i.numeroRuc.errors}">
+                                           <div *ngIf="submittes && i.numeroRuc.errors" class="invalid-feedback">
+                                              <div *ngIf="i.numeroRuc.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                        </div>
+                                        <label for="example-text-input" class="col-4 col-form-label">Descripcion Comercial</label>
+                                        <div class="col-8">
+                                            <input class="form-control" formControlName="descripcionComercial"  [(ngModel)]="archiTemp.descripcionComercial" name="archiTemp.descripcionComercial" type="text" id="txtdescripcionComercial3"
+                                            [ngClass]="{'is-invalid':submittes && i.descripcionComercial.errors}">
+                                            <div *ngIf="submittes && i.descripcionComercial.errors" class="invalid-feedback">
+                                                <div *ngIf="i.descripcionComercial.errors.required">Codigo Terminal es un dato requerido</div>
+                                              </div>
+                                        </div>
+                                        <label for="example-text-input" class="col-4 col-form-label">Direccion</label>
+                                        <div class="col-8">
+                                          <input class="form-control"  formControlName="direccion" [(ngModel)]="archiTemp.direccion" name="archiTemp.direccion" type="text"  id="txtdireccion3"
+                                          [ngClass]="{'is-invalid':submittes && i.direccion.errors}">
+                                          <div *ngIf="submittes && i.direccion.errors" class="invalid-feedback">
+                                              <div *ngIf="i.direccion.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Representante</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="representante" [(ngModel)]="archiTemp.representante" name="archiTemp.representante" type="text"  id="txtrepresentante3"
+                                          [ngClass]="{'is-invalid':submittes && i.representante.errors}">
+                                          <div *ngIf="submittes && i.representante.errors" class="invalid-feedback">
+                                              <div *ngIf="i.representante.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">DNI Representante</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="dniRepresentante" [(ngModel)]="archiTemp.dniRepresentante" name="archiTemp.dniRepresentante" type="number"  id="txtdniRepresentante3"
+                                          [ngClass]="{'is-invalid':submittes && i.dniRepresentante.errors}">
+                                          <div *ngIf="submittes && i.dniRepresentante.errors" class="invalid-feedback">
+                                              <div *ngIf="i.dniRepresentante.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Cargo Representante</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="cargoRepresentante" [(ngModel)]="archiTemp.cargoRepresentante" name="archiTemp.cargoRepresentante" type="text"  id="txtcargoRepresentante3"
+                                          [ngClass]="{'is-invalid':submittes && i.cargoRepresentante.errors}">
+                                          <div *ngIf="submittes && i.cargoRepresentante.errors" class="invalid-feedback">
+                                              <div *ngIf="i.cargoRepresentante.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Telefono 1</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="telefonoUno"  [(ngModel)]="archiTemp.telefonoUno" name="archiTemp.telefonoUno" type="number"  id="txttelefonoUno3"
+                                          [ngClass]="{'is-invalid':submittes && i.telefonoUno.errors}">
+                                          <div *ngIf="submittes && i.telefonoUno.errors" class="invalid-feedback">
+                                              <div *ngIf="i.telefonoUno.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Telefono 2</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="telefonoDos" [(ngModel)]="archiTemp.telefonoDos" name="archiTemp.telefonoDos" type="number"  id="telefondos3"
+                                          [ngClass]="{'is-invalid':submittes && i.telefonoDos.errors}">
+                                          <div *ngIf="submittes && i.telefonoDos.errors" class="invalid-feedback">
+                                              <div *ngIf="i.telefonoDos.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Telefono 3</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="telefonoTres" [(ngModel)]="archiTemp.telefonoTres" name="archiTemp.telefonoTres" type="number"  id="txttelefonotres3"
+                                          [ngClass]="{'is-invalid':submittes && i.telefonoTres.errors}">
+                                          <div *ngIf="submittes && i.telefonoTres.errors" class="invalid-feedback">
+                                              <div *ngIf="i.telefonoTres.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Email</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="email" [(ngModel)]="archiTemp.email" name="archiTemp.email" type="text"  id="txtemail3"
+                                          [ngClass]="{'is-invalid':submittes && i.email.errors}">
+                                          <div *ngIf="submittes && i.email.errors" class="invalid-feedback">
+                                              <div *ngIf="i.email.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Web Site</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="webSite" [(ngModel)]="archiTemp.webSite" name="archiTemp.webSite" type="text"  id="txtwebSite3"
+                                          [ngClass]="{'is-invalid':submittes && i.webSite.errors}">
+                                          <div *ngIf="submittes && i.webSite.errors" class="invalid-feedback">
+                                              <div *ngIf="i.webSite.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Logo</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="logo" [(ngModel)]="archiTemp.logo" name="archiTemp.logo" type="text"  id="txtlogo3"
+                                          [ngClass]="{'is-invalid':submittes && i.logo.errors}">
+                                          <div *ngIf="submittes && i.logo.errors" class="invalid-feedback">
+                                              <div *ngIf="i.logo.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Activo PDT</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="activoPDT" [(ngModel)]="archiTemp.activoPDT" name="archiTemp.activoPDT" type="text"  id="txtactivoPDT3"
+                                          [ngClass]="{'is-invalid':submittes && i.activoPDT.errors}">
+                                          <div *ngIf="submittes && i.activoPDT.errors" class="invalid-feedback">
+                                              <div *ngIf="i.activoPDT.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Codigo Pais</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="codPais" [(ngModel)]="archiTemp.codPais" name="archiTemp.codPais" type="number"  id="txtcodPais3"
+                                          [ngClass]="{'is-invalid':submittes && i.codPais.errors}">
+                                          <div *ngIf="submittes && i.codPais.errors" class="invalid-feedback">
+                                              <div *ngIf="i.codPais.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Longitud</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="logitud" [(ngModel)]="archiTemp.logitud" name="archiTemp.logitud" type="text"  id="txtlogitud3"
+                                          [ngClass]="{'is-invalid':submittes && i.logitud.errors}">
+                                          <div *ngIf="submittes && i.logitud.errors" class="invalid-feedback">
+                                              <div *ngIf="i.logitud.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Latitud</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="latitud" [(ngModel)]="archiTemp.latitud" name="archiTemp.latitud" type="text"  id="txtlatitud3"
+                                          [ngClass]="{'is-invalid':submittes && i.latitud.errors}">
+                                          <div *ngIf="submittes && i.latitud.errors" class="invalid-feedback">
+                                              <div *ngIf="i.latitud.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Created Date</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="createdDate" [(ngModel)]="archiTemp.createdDate" name="archiTemp.createdDate" type="date"  id="txtcreatedDate3"
+                                          [ngClass]="{'is-invalid':submittes && i.createdDate.errors}">
+                                          <div *ngIf="submittes && i.createdDate.errors" class="invalid-feedback">
+                                              <div *ngIf="i.createdDate.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Created By</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="createdBy"  [(ngModel)]="archiTemp.createdBy" name="archiTemp.createdBy" type="string"  id="txtcreatedBy3"
+                                          [ngClass]="{'is-invalid':submittes && i.createdBy.errors}">
+                                          <div *ngIf="submittes && i.createdBy.errors" class="invalid-feedback">
+                                              <div *ngIf="i.createdBy.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Last Modified Date</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="lastodifiedDate" [(ngModel)]="archiTemp.lastodifiedDate" name="archiTemp.lastodifiedDate" type="date"  id="txtlastodifiedDate3"
+                                          [ngClass]="{'is-invalid':submittes && i.lastodifiedDate.errors}">
+                                          <div *ngIf="submittes && i.lastodifiedDate.errors" class="invalid-feedback">
+                                              <div *ngIf="i.lastodifiedDate.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Last Modified By</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="lastmodfiedBy" [(ngModel)]="archiTemp.lastmodfiedBy" name="archiTemp.lastmodfiedBy" type="string"  id="txtlastmodfiedBy3"
+                                          [ngClass]="{'is-invalid':submittes && i.lastmodfiedBy.errors}">
+                                          <div *ngIf="submittes && i.lastmodfiedBy.errors" class="invalid-feedback">
+                                              <div *ngIf="i.lastmodfiedBy.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+                                      <label for="example-text-input" class="col-4 col-form-label">Flag Estado</label>
+                                        <div class="col-8">
+                                          <input class="form-control" formControlName="flagestado" [(ngModel)]="archiTemp.flagestado" name="archiTemp.flagestado" type="number"  id="txtflagestado3"
+                                          [ngClass]="{'is-invalid':submittes && i.flagestado.errors}">
+                                          <div *ngIf="submittes && i.flagestado.errors" class="invalid-feedback">
+                                              <div *ngIf="i.flagestado.errors.required">Codigo Terminal es un dato requerido</div>
+                                            </div>
+                                      </div>
+
+                                      <div class="col-12" *ngIf="responder">
+                                          <label class="alert alert-warning col-12 col-form-label " >{{Respuesta2}}</label>
+                                        </div>  
+                                      
+                                    </div>                                          
+                                    <hr />
+                                    <button (click)="buttonClicked()">Insertar</button>
+                                </div>                                     
+                            </form>
+                          </div>
+                      </div>
+                  </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
